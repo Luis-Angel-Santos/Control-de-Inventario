@@ -1,5 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,7 +8,7 @@ import { Component, Inject } from '@angular/core';
 })
 export class SidenavComponent {
 
-  media = Inject(MediaMatcher);
+  media = inject(MediaMatcher);
   mobileQuery: MediaQueryList;
 
   constructor(){
