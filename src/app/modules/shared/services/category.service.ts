@@ -17,4 +17,9 @@ export class CategoryService {
     return this.http.get(this.endPoint);
   }
 
+  //crear nueva categoria
+  createCategory(body: any){
+    return this.http.post(this.endPoint, body);
+  }
+
 }
