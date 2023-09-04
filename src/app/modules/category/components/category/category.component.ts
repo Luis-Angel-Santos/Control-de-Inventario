@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryElement } from 'src/app/modules/interfaces/category-element';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CrearCategoriaComponent } from '../crear-categoria/crear-categoria.component';
 import Swal from 'sweetalert2';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-category',
@@ -19,6 +20,9 @@ export class CategoryComponent implements OnInit{
   public displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   public dataSource = new MatTableDataSource<CategoryElement>();
   public categoryEncontrado!: boolean;
+
+  @ViewChild(MatPaginator)
+  public paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.getCategories();
@@ -51,6 +55,7 @@ export class CategoryComponent implements OnInit{
         dataCategory.push(element);
       });
       this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
+      this.dataSource.paginator = this.paginator;
     }
 
   }
