@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../../shared/services/category.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-crear-categoria',
@@ -14,6 +14,7 @@ export class CrearCategoriaComponent implements OnInit{
   private fb = inject(FormBuilder);
   private categoryService = inject(CategoryService);
   private dialogRef = inject(MatDialogRef);
+  public data = inject(MAT_DIALOG_DATA);
 
   ngOnInit(): void {
 
@@ -21,6 +22,10 @@ export class CrearCategoriaComponent implements OnInit{
       name: ['', Validators.required],
       description: ['', Validators.required]
     });
+
+    if(this.data != null){
+      this.updateForm(this.data);
+    }
 
   }
 
@@ -31,20 +36,38 @@ export class CrearCategoriaComponent implements OnInit{
       description: this.categoryForm.get('description')?.value
     }
 
-    this.categoryService.createCategory(data).subscribe({
-      next:(resp) => {
-        this.dialogRef.close(1);
-      },
-      error: (error) => {
-        this.dialogRef.close(2);
-      }
-    })
+    if(this.data != null){
+      this.categoryService.updateCategory(data, this.data.id).subscribe({
+        next:(resp) => {
+          this.dialogRef.close(1);
+        },
+        error: (error) => {
+          this.dialogRef.close(2);
+        }
+      });
+    }else{
+      this.categoryService.createCategory(data).subscribe({
+        next:(resp) => {
+          this.dialogRef.close(1);
+        },
+        error: (error) => {
+          this.dialogRef.close(2);
+        }
+      });
+    }
 
   }
 
   cancel(){
-
     this.dialogRef.close(3);
+  }
+
+  updateForm(data: any){
+
+    this.categoryForm = this.fb.group({
+      name: [data.name, Validators.required],
+      description: [data.description, Validators.required]
+    });
 
   }
 

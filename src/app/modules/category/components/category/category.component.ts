@@ -24,11 +24,19 @@ export class CategoryComponent implements OnInit{
 
   getCategories(): void{
 
-    this.categoryService.getCategories().subscribe((data) => {
-        console.info(data);
+    this.categoryService.getCategories().subscribe({
+      next:(data) => {
         this.processCategoriesResponse(data);
-      }
-    );
+      },
+      error(err) {
+        Swal.fire({
+          title: 'Opps parerce que algo salio mal :(',
+          text: err.message,
+          icon: 'error',
+          showConfirmButton: false,
+        });
+      },
+    });
 
   }
 
@@ -65,6 +73,35 @@ export class CategoryComponent implements OnInit{
         Swal.fire({
           title: 'Opps parerce que algo salio mal :(',
           text: 'No se pudo crear la nueva categoria, por favor intenta de nuevo.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
+
+  }
+
+  edit(id: number, name: string, description: string){
+
+    const dialogRef = this.dialog.open( CrearCategoriaComponent, {
+      data: { id: id, name: name, description: description }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 1){
+        Swal.fire({
+          title: 'Bien :)',
+          text: 'La categoria se ha actualizado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        this.getCategories();
+      }else if(result == 2){
+        Swal.fire({
+          title: 'Opps parerce que algo salio mal :(',
+          text: 'No se pudo actualizar la categoria, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
           timer: 3000

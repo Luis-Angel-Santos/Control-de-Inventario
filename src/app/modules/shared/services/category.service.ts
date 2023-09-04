@@ -22,4 +22,9 @@ export class CategoryService {
     return this.http.post(this.endPoint, body);
   }
 
+  //editar categoria
+  updateCategory(body: any, id: any){
+    return this.http.put(`${this.endPoint}/id`, body);
+  }
+
 }
