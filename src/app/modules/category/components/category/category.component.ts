@@ -5,6 +5,7 @@ import { CategoryElement } from 'src/app/modules/interfaces/category-element';
 import { MatDialog } from '@angular/material/dialog';
 import { CrearCategoriaComponent } from '../crear-categoria/crear-categoria.component';
 import Swal from 'sweetalert2';
+import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
 
 @Component({
   selector: 'app-category',
@@ -85,6 +86,7 @@ export class CategoryComponent implements OnInit{
   edit(id: number, name: string, description: string){
 
     const dialogRef = this.dialog.open( CrearCategoriaComponent, {
+      width: '450px',
       data: { id: id, name: name, description: description }
     });
 
@@ -102,6 +104,35 @@ export class CategoryComponent implements OnInit{
         Swal.fire({
           title: 'Opps parerce que algo salio mal :(',
           text: 'No se pudo actualizar la categoria, por favor intenta de nuevo.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
+
+  }
+
+  delete(id: number){
+
+    const dialogRef = this.dialog.open( ConfirmComponent, {
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 1){
+        Swal.fire({
+          title: 'Bien :)',
+          text: 'La categoria se ha eliminado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        this.getCategories();
+      }else if(result == 2){
+        Swal.fire({
+          title: 'Opps parerce que algo salio mal :(',
+          text: 'No se pudo eliminar la categoria, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
           timer: 3000

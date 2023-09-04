@@ -27,4 +27,9 @@ export class CategoryService {
     return this.http.put(`${this.endPoint}/id`, body);
   }
 
+  //eliminar una categoria
+  deleteCategory(id: number){
+    return this.http.delete(this.endPoint);
+  }
+
 }
