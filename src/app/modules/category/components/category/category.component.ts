@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit{
   public dialog = inject(MatDialog);
   public displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   public dataSource = new MatTableDataSource<CategoryElement>();
+  public categoryEncontrado!: boolean;
 
   ngOnInit(): void {
     this.getCategories();
@@ -31,7 +32,7 @@ export class CategoryComponent implements OnInit{
       },
       error(err) {
         Swal.fire({
-          title: 'Opps parerce que algo salio mal :(',
+          title: 'Opps parece que algo salio mal :(',
           text: err.message,
           icon: 'error',
           showConfirmButton: false,
@@ -72,7 +73,7 @@ export class CategoryComponent implements OnInit{
         this.getCategories();
       }else if(result == 2){
         Swal.fire({
-          title: 'Opps parerce que algo salio mal :(',
+          title: 'Opps parece que algo salio mal :(',
           text: 'No se pudo crear la nueva categoria, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
@@ -102,7 +103,7 @@ export class CategoryComponent implements OnInit{
         this.getCategories();
       }else if(result == 2){
         Swal.fire({
-          title: 'Opps parerce que algo salio mal :(',
+          title: 'Opps parece que algo salio mal :(',
           text: 'No se pudo actualizar la categoria, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
@@ -131,7 +132,7 @@ export class CategoryComponent implements OnInit{
         this.getCategories();
       }else if(result == 2){
         Swal.fire({
-          title: 'Opps parerce que algo salio mal :(',
+          title: 'Opps parece que algo salio mal :(',
           text: 'No se pudo eliminar la categoria, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
@@ -139,6 +140,25 @@ export class CategoryComponent implements OnInit{
         });
       }
     });
+
+  }
+
+  buscar(termino: string){
+
+    if(termino.length === 0){
+      this.categoryEncontrado = true;
+      return this.getCategories();
+    }else{
+      this.categoryService.getCategoryById(termino).subscribe({
+        next:(value) => {
+            this.processCategoriesResponse(value);
+            this.categoryEncontrado = true;
+        },
+        error:(err) => {
+          this.categoryEncontrado = false;
+        },
+      })
+    }
 
   }
 

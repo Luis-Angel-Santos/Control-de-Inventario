@@ -22,14 +22,19 @@ export class CategoryService {
     return this.http.post(this.endPoint, body);
   }
 
-  //editar categoria
+  //editar categoria por id
   updateCategory(body: any, id: number){
     return this.http.put(`${this.endPoint}/${id}`, body);
   }
 
-  //eliminar una categoria
+  //eliminar una categoria por id
   deleteCategory(id: number){
     return this.http.delete(`${this.endPoint}/${id}`);
+  }
+
+  //buscar categoria por id
+  getCategoryById(id: string){
+    return this.http.get(`${this.endPoint}/${id}`);
   }
 
 }

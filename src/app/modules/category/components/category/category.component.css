@@ -11,6 +11,10 @@ ul li{
   margin-left: auto;
 }
 
+mat-form-field{
+  width: 300px;
+}
+
 table{
   width: 100%;
 }

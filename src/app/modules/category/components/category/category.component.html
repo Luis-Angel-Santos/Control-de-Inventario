@@ -3,9 +3,10 @@
   <mat-card-header>
     <div>
       <mat-form-field appearance="fill">
-        <mat-label>Buscar una categoria</mat-label>
-        <input matInput #input>
+        <mat-label>Buscar categoria por id</mat-label>
+        <input matInput #input (keyup)="buscar(input.value)">
       </mat-form-field>
+      <p *ngIf="categoryEncontrado == false">No encontramos categorias asociadas al id buscado</p>
     </div>
   </mat-card-header>
   <mat-card-header>
