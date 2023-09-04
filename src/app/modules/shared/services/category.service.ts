@@ -23,13 +23,13 @@ export class CategoryService {
   }
 
   //editar categoria
-  updateCategory(body: any, id: any){
-    return this.http.put(`${this.endPoint}/id`, body);
+  updateCategory(body: any, id: number){
+    return this.http.put(`${this.endPoint}/${id}`, body);
   }
 
   //eliminar una categoria
   deleteCategory(id: number){
-    return this.http.delete(this.endPoint);
+    return this.http.delete(`${this.endPoint}/${id}`);
   }
 
 }
