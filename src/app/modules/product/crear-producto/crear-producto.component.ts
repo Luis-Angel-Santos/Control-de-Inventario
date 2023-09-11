@@ -25,6 +25,7 @@ export class CrearProductoComponent {
 
   ngOnInit(): void {
 
+    this.getAllCategories();
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
@@ -32,8 +33,10 @@ export class CrearProductoComponent {
       category: ['', Validators.required],
       image: ['', Validators.required]
     });
+    if(this.data != null){
+      this.updateForm(this.data);
+    }
 
-    this.getAllCategories();
 
   }
 
@@ -72,15 +75,36 @@ export class CrearProductoComponent {
     uploadImageData.append('quantity', data.quantity);
     uploadImageData.append('categoryId', data.category)
 
-    this.productService.createProduct(uploadImageData).subscribe({
-      next: (resp: any) => {
-        this.dialogRef.close(1);
-      },
-      error: (error) => {
-        this.dialogRef.close(2);
-      }
-    });
+    if(this.data != null){
+      this.productService.updateProduct(uploadImageData, this.data.id).subscribe({
+        next: (resp: any) => {
+          this.dialogRef.close(1);
+        },
+        error: (error) => {
+          this.dialogRef.close(2);
+        }
+      });
+    }else{
+      this.productService.createProduct(uploadImageData).subscribe({
+        next: (resp: any) => {
+          this.dialogRef.close(1);
+        },
+        error: (error) => {
+          this.dialogRef.close(2);
+        }
+      });
+    }
 
+  }
+
+  updateForm(data: any){
+    this.productForm = this.fb.group({
+      name: [data.name, Validators.required],
+      price: [data.price, Validators.required],
+      quantity: [data.quantity, Validators.required],
+      category: [data.category.id, Validators.required],
+      image: ['', Validators.required]
+    });
   }
 
   cancel(){

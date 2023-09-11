@@ -22,4 +22,9 @@ export class ProductService {
     return this.http.post(this.endPoint, product);
   }
 
+  //actualizar un producto
+  updateProduct(product: any, id: number){
+    return this.http.put(`${this.endPoint}/${id}`, product);
+  }
+
 }

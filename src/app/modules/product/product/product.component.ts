@@ -6,6 +6,7 @@ import { ProductService } from '../../shared/services/product.service';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { CrearProductoComponent } from '../crear-producto/crear-producto.component';
+import { CategoryElement } from '../../interfaces/category-element';
 
 @Component({
   selector: 'app-product',
@@ -31,8 +32,6 @@ export class ProductComponent implements OnInit{
     this.productService.getProducts().subscribe({
       next:(data) => {
         this.processProductsResponse(data);
-        console.log(data);
-
       },
       error: (err) => {
         Swal.fire({
@@ -50,8 +49,6 @@ export class ProductComponent implements OnInit{
     const dateProduct: ProductElement[] = [];
     if(resp.metadata[0].code == '1'){
       let listProducts = resp.product.products;
-      console.log(listProducts);
-
       listProducts.forEach((element: ProductElement) => {
         element.category.name = element.category.name
         element.image = 'data:image/jpeg;base64,' + element.image;
@@ -83,6 +80,42 @@ export class ProductComponent implements OnInit{
         Swal.fire({
           title: 'Opps parece que algo salio mal :(',
           text: 'No se pudo crear el producto, por favor intenta de nuevo.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
+
+  }
+
+  edit(id: number, name: string, price: number, quantity: number, category: CategoryElement){
+
+    const dialogRef = this.dialog.open(CrearProductoComponent, {
+      width: '450px',
+      data: {
+        id: id,
+        name: name,
+        price: price,
+        quantity: quantity,
+        category: category
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 1){
+        Swal.fire({
+          title: 'Bien :)',
+          text: 'El producto se ha editado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        this.getProducts();
+      }else if(result == 2){
+        Swal.fire({
+          title: 'Opps parece que algo salio mal :(',
+          text: 'No se pudo editar el producto, por favor intenta de nuevo.',
           icon: 'error',
           showConfirmButton: false,
           timer: 3000
