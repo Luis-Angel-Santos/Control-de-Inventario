@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { CrearProductoComponent } from '../crear-producto/crear-producto.component';
 import { CategoryElement } from '../../interfaces/category-element';
+import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
 
 @Component({
   selector: 'app-product',
@@ -124,5 +125,38 @@ export class ProductComponent implements OnInit{
     });
 
   }
+
+  delete(productId: number){
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '450px',
+      data: {
+        id: productId,
+        module: "product"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 1){
+        Swal.fire({
+          title: 'Bien :)',
+          text: 'El producto se ha eliminado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        this.getProducts();
+      }else if(result == 2){
+        Swal.fire({
+          title: 'Opps parece que algo salio mal :(',
+          text: 'No se pudo eliminar el producto, por favor intenta de nuevo.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
+
+  }
+
 
 }

@@ -27,4 +27,9 @@ export class ProductService {
     return this.http.put(`${this.endPoint}/${id}`, product);
   }
 
+  //eliminar un producto por id
+  deleteProduct(id: number){
+    return this.http.delete(`${this.endPoint}/${id}`);
+  }
+
 }
