@@ -4,6 +4,8 @@ import { ProductElement } from '../../interfaces/product-element';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductService } from '../../shared/services/product.service';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { CrearProductoComponent } from '../crear-producto/crear-producto.component';
 
 @Component({
   selector: 'app-product',
@@ -13,6 +15,7 @@ import Swal from 'sweetalert2';
 export class ProductComponent implements OnInit{
 
   private productService = inject(ProductService);
+  public dialog = inject(MatDialog);
   public displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'category', 'image', 'actions'];
   public dataSource = new MatTableDataSource<ProductElement>();
   public categoryEncontrado!: boolean;
@@ -57,6 +60,35 @@ export class ProductComponent implements OnInit{
       this.dataSource = new MatTableDataSource<ProductElement>(dateProduct);
       this.dataSource.paginator = this.paginator;
     }
+
+  }
+
+  openProductDialog(){
+
+    const dialogRef = this.dialog.open(CrearProductoComponent, {
+      width: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 1){
+        Swal.fire({
+          title: 'Bien :)',
+          text: 'El producto se ha guardado correctamente',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        this.getProducts();
+      }else if(result == 2){
+        Swal.fire({
+          title: 'Opps parece que algo salio mal :(',
+          text: 'No se pudo crear el producto, por favor intenta de nuevo.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
+    });
 
   }
 

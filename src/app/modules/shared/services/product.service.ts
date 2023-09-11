@@ -17,4 +17,9 @@ export class ProductService {
     return this.http.get(this.endPoint);
   }
 
+  //crear un producto
+  createProduct(product: any){
+    return this.http.post(this.endPoint, product);
+  }
+
 }
