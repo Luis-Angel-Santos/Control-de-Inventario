@@ -34,14 +34,14 @@ export class CategoryComponent implements OnInit{
       next:(data) => {
         this.processCategoriesResponse(data);
       },
-      error(err) {
+      error: (err) => {
         Swal.fire({
           title: 'Opps parece que algo salio mal :(',
-          text: err.message,
+          text: err.statusText,
           icon: 'error',
           showConfirmButton: false,
         });
-      },
+      }
     });
 
   }
