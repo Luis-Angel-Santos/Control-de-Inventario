@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit{
   public dialog = inject(MatDialog);
   public displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'category', 'image', 'actions'];
   public dataSource = new MatTableDataSource<ProductElement>();
-  public categoryEncontrado!: boolean;
+  public productEncontrado!: boolean;
 
   @ViewChild(MatPaginator)
   public paginator!: MatPaginator;
@@ -158,5 +158,22 @@ export class ProductComponent implements OnInit{
 
   }
 
+  buscar(name: string){
+
+    if(name.length == 0){
+      this.productEncontrado = true;
+      return this.getProducts();
+    }
+    this.productService.getProductByName(name).subscribe({
+      next:(data) => {
+        this.productEncontrado = true;
+        this.processProductsResponse(data);
+      },
+      error: (err) => {
+        this.productEncontrado = false;
+      }
+    });
+
+  }
 
 }

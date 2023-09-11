@@ -32,4 +32,9 @@ export class ProductService {
     return this.http.delete(`${this.endPoint}/${id}`);
   }
 
+  //obtener un producto por nombre
+  getProductByName(name: string){
+    return this.http.get(`${this.endPoint}/filter/${name}`);
+  }
+
 }

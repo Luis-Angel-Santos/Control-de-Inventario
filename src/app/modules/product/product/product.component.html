@@ -4,9 +4,9 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label>Buscar productos por nombre</mat-label>
-        <input matInput #input>
+        <input matInput #input (keyup)="buscar(input.value)">
       </mat-form-field>
-      <p *ngIf="categoryEncontrado == false">No encontramos productos asociadas al id buscado</p>
+      <p *ngIf="productEncontrado == false">No encontramos productos asociadas al termino buscado</p>
     </div>
   </mat-card-header>
   <mat-card-header>
