@@ -1,15 +1,18 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit{
 
-  media = inject(MediaMatcher);
-  mobileQuery: MediaQueryList;
+  private keyCloakService = inject(KeycloakService);
+  public username!: string;
+  public media = inject(MediaMatcher);
+  public mobileQuery: MediaQueryList;
   menuNav = [
     {name: 'Home', route: 'home', icon: 'home'},
     {name: 'Categorias', route: 'category', icon: 'category'},
@@ -18,6 +21,14 @@ export class SidenavComponent {
 
   constructor(){
     this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
+  }
+
+  ngOnInit(): void {
+    this.username = this.keyCloakService.getUsername();
+  }
+
+  logout(){
+    this.keyCloakService.logout();
   }
 
 }
