@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CrearProductoComponent } from '../crear-producto/crear-producto.component';
 import { CategoryElement } from '../../interfaces/category-element';
 import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
+import { UtilService } from '../../shared/services/util.service';
 
 @Component({
   selector: 'app-product',
@@ -17,16 +18,19 @@ import { ConfirmComponent } from '../../shared/components/confirm/confirm.compon
 export class ProductComponent implements OnInit{
 
   private productService = inject(ProductService);
+  private utilService = inject(UtilService);
   public dialog = inject(MatDialog);
   public displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'category', 'image', 'actions'];
   public dataSource = new MatTableDataSource<ProductElement>();
   public productEncontrado!: boolean;
+  public isAdmin!: boolean;
 
   @ViewChild(MatPaginator)
   public paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.getProducts();
+    this.isAdmin = this.utilService.isAdmin();
   }
 
   getProducts(){

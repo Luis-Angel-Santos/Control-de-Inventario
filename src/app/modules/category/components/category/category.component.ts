@@ -7,6 +7,7 @@ import { CrearCategoriaComponent } from '../crear-categoria/crear-categoria.comp
 import Swal from 'sweetalert2';
 import { ConfirmComponent } from 'src/app/modules/shared/components/confirm/confirm.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { UtilService } from 'src/app/modules/shared/services/util.service';
 
 @Component({
   selector: 'app-category',
@@ -16,16 +17,20 @@ import { MatPaginator } from '@angular/material/paginator';
 export class CategoryComponent implements OnInit{
 
   private categoryService = inject(CategoryService);
+  private utilService = inject(UtilService);
   public dialog = inject(MatDialog);
   public displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   public dataSource = new MatTableDataSource<CategoryElement>();
   public categoryEncontrado!: boolean;
+  public isAdmin!: boolean;
 
   @ViewChild(MatPaginator)
   public paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.getCategories();
+    this.utilService.getRoles();
+    this.isAdmin = this.utilService.isAdmin();
   }
 
   getCategories(): void{
