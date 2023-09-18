@@ -1,0 +1,39 @@
+<div class="body animate__animated animate__fadeIn">
+  <mat-card class="loginCard">
+      <div class="header">
+          <h2>Iniciar Sesión</h2>
+      </div>
+      <mat-card-content style="padding-bottom: 15px;">
+          <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesion()">
+              <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Correo</mat-label>
+                  <input formControlName="email" matInput autocomplete="off" placeholder="Ingresa tu correo">
+                  <mat-icon matSuffix>mail</mat-icon>
+              </mat-form-field>
+              <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Contraseña</mat-label>
+                  <input [type]="ocultarPassword ? 'password' : 'text'" autocomplete="off" formControlName="password" matInput placeholder="Ingresa tu contraseña">
+                  <button mat-icon-button matSuffix (click)="ocultarPassword = !ocultarPassword" type="button">
+                      <mat-icon matSuffix>{{ocultarPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+              </mat-form-field>
+              <p *ngIf="formularioLogin.get('email')?.errors
+                        && formularioLogin.get('email')?.touched"
+                        class="error">
+                  Por favor introduce un correo valido*
+              </p>
+              <p *ngIf="formularioLogin.get('password')?.errors && formularioLogin.get('password')?.touched"
+                  color="warn" class="error">
+                  La contraseña es obligatoria*
+                  </p>
+              <button class="full-width" mat-raised-button color="primary" type="submit" [disabled]="formularioLogin.invalid">
+                  <mat-icon matSuffix>login</mat-icon>
+                  Iniciar Sesión
+              </button>
+          </form>
+      </mat-card-content>
+      <mat-card-footer>
+          <mat-progress-bar mode="indeterminate" *ngIf="mostrarLoading"></mat-progress-bar><p *ngIf="mostrarLoading">Espere...</p>
+      </mat-card-footer>
+  </mat-card>
+</div>
