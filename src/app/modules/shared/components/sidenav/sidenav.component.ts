@@ -1,5 +1,8 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, inject } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { UserElement } from 'src/app/modules/interfaces/user-element';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,7 +11,8 @@ import { Component, OnInit, inject } from '@angular/core';
 })
 export class SidenavComponent implements OnInit{
 
-  public username!: string;
+  private userService = inject(UserService);
+  public user!: UserElement;
   public media = inject(MediaMatcher);
   public mobileQuery: MediaQueryList;
   menuNav = [
@@ -22,11 +26,28 @@ export class SidenavComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
+    this.user = this.userService.getUser();
   }
 
   logout(){
-
+    Swal.fire({
+      title: '¿Desea cerrar sesión?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result)=>{
+      if(result.isConfirmed){
+        Swal.fire({
+          title: 'Sesión cerrada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(()=>{
+          this.userService.logout();
+        });
+      }
+    });
   }
 
 }
