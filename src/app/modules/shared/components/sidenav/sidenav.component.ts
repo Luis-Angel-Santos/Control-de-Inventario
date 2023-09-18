@@ -24,7 +24,7 @@ export class SidenavComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.username = this.keyCloakService.getUsername();
+
   }
 
   logout(){

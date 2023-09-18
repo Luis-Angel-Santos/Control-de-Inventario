@@ -30,7 +30,6 @@ export class ProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.getProducts();
-    this.isAdmin = this.utilService.isAdmin();
   }
 
   getProducts(){

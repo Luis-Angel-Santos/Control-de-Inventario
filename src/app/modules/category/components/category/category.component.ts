@@ -30,7 +30,6 @@ export class CategoryComponent implements OnInit{
   ngOnInit(): void {
     this.getCategories();
     this.utilService.getRoles();
-    this.isAdmin = this.utilService.isAdmin();
   }
 
   getCategories(): void{

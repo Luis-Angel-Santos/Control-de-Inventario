@@ -11,12 +11,11 @@ export class UtilService {
   constructor() { }
 
   getRoles(){
-    return this.keycloakService.getUserRoles();
+
   }
 
   isAdmin(): boolean{
-    let roles = this.keycloakService.getUserRoles().filter( role => role == 'admin');
-    return roles.length > 0;
+    return true;
   }
 
 }
