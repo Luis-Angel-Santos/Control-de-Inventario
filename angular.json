@@ -16,7 +16,8 @@
             "allowedCommonJsDependencies": [
               "lodash",
               "base64-js",
-              "js-sha256"
+              "js-sha256",
+              "sweetalert2"
             ],
             "outputPath": "dist/control-inventario",
             "index": "src/index.html",

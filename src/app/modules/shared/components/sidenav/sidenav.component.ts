@@ -1,6 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, inject } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,7 +8,6 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class SidenavComponent implements OnInit{
 
-  private keyCloakService = inject(KeycloakService);
   public username!: string;
   public media = inject(MediaMatcher);
   public mobileQuery: MediaQueryList;
@@ -28,7 +26,7 @@ export class SidenavComponent implements OnInit{
   }
 
   logout(){
-    this.keyCloakService.logout();
+
   }
 
 }
