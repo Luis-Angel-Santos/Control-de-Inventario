@@ -11,7 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class HomeComponent implements OnInit{
 
-  chartBar: any;
+  public chartBar: any;
+  public chartDonut: any;
   private productService = inject(ProductService);
 
   ngOnInit(): void {
@@ -48,6 +49,20 @@ export class HomeComponent implements OnInit{
 
       this.chartBar = new Chart('canvas-bar', {
         type: 'bar',
+        data:{
+          labels: nameProduct,
+          datasets: [
+            {
+              label: 'Productos',
+              data: quantityProduct,
+              borderWidth: 1
+            }
+          ]
+        }
+      });
+
+      this.chartDonut = new Chart('canvas-donut', {
+        type: 'doughnut',
         data:{
           labels: nameProduct,
           datasets: [
