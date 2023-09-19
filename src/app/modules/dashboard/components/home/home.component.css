@@ -1,0 +1,18 @@
+.grafico{
+  text-align: center;
+  margin-top: 10px auto;
+}
+
+.chartContainer{
+  height: 90vh;
+  width: 90%;
+  display: flex;
+  justify-content: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartContainer canvas{
+  width: 100%;
+  max-height: 300px;
+}

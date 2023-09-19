@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit{
   public media = inject(MediaMatcher);
   public mobileQuery: MediaQueryList;
   menuNav = [
-    {name: 'Home', route: 'home', icon: 'home'},
+    {name: 'Inicio', route: 'home', icon: 'home'},
     {name: 'Categorias', route: 'category', icon: 'category'},
     {name: 'Productos', route: 'product', icon: 'production_quantity_limits'},
   ];
