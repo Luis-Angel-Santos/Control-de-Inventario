@@ -32,13 +32,8 @@ export class UserService {
 
   //obtener datos del usuario del localStorage
   getUser(): UserElement{
-    let usuarioLogged!: UserElement;
     const user = JSON.parse(localStorage.getItem('user')!);
-
-    usuarioLogged.id = user.id;
-    usuarioLogged.name = user.name;
-    usuarioLogged.email = user.email;
-    usuarioLogged.role = user.role;
+    let usuarioLogged: UserElement = user;
 
     return usuarioLogged;
 

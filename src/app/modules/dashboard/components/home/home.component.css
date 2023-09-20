@@ -1,10 +1,10 @@
 .grafico{
   text-align: center;
-  margin-top: 10px auto;
+  margin: 10px auto;
 }
 
 .chartContainer{
-  height: 90vh;
+  margin: 10px auto;
   width: 90%;
   display: flex;
   justify-content: column;
@@ -13,6 +13,7 @@
 }
 
 .chartContainer canvas{
+  margin: 10px auto;
   width: 100%;
   max-height: 300px;
 }

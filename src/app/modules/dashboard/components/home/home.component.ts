@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Chart } from 'chart.js';
 import { ProductElement } from 'src/app/modules/interfaces/product-element';
 import { ProductService } from 'src/app/modules/shared/services/product.service';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 import Swal from 'sweetalert2';
 
 @Component({
@@ -53,11 +54,20 @@ export class HomeComponent implements OnInit{
           labels: nameProduct,
           datasets: [
             {
-              label: 'Productos',
+              label: 'Stock',
               data: quantityProduct,
               borderWidth: 1
             }
           ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            y:{
+              beginAtZero: true
+            }
+          }
         }
       });
 
@@ -67,11 +77,14 @@ export class HomeComponent implements OnInit{
           labels: nameProduct,
           datasets: [
             {
-              label: 'Productos',
-              data: quantityProduct,
-              borderWidth: 1
+              label: 'Stock',
+              data: quantityProduct
             }
           ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
         }
       });
 

@@ -36,10 +36,10 @@ export class LoginComponent implements OnInit{
         this.mostrarLoading = false;
         console.log(data);
         const datosUserLogin: UserElement = {
-          id: data.userResponse.user[0].id,
-          name: data.userResponse.user[0].name,
-          email: data.userResponse.user[0].email,
-          role: data.userResponse.user[0].role
+          id: data.userResponse?.user[0].id,
+          name: data.userResponse?.user[0].name,
+          email: data.userResponse?.user[0].email,
+          role: data.userResponse?.user[0].role
           //token: data.token     TODO: implementar jwt
         };
         localStorage.setItem('user', JSON.stringify(datosUserLogin));
