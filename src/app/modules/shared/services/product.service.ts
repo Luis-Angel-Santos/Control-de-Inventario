@@ -37,4 +37,11 @@ export class ProductService {
     return this.http.get(`${this.endPoint}/filter/${name}`);
   }
 
+  //exportar a excel
+  exportToExcel(){
+    return this.http.get(`${this.endPoint}/export/excel`, {
+      responseType: 'blob'
+    });
+  }
+
 }

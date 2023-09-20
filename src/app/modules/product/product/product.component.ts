@@ -179,4 +179,27 @@ export class ProductComponent implements OnInit{
 
   }
 
+  exportExcel(){
+
+    this.productService.exportToExcel().subscribe({
+      next: (data) => {
+        let file = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        let fileUrl = URL.createObjectURL(file);
+        var anchor = document.createElement("a");
+        anchor.download = "productos.xlsx";
+        anchor.href = fileUrl;
+        anchor.click();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Opps parece que algo salio mal :(',
+          text: 'No se pudo descargar el archivo',
+          icon: 'error',
+          showConfirmButton: false,
+        });
+      }
+    });
+
+  }
+
 }

@@ -3,6 +3,10 @@
   margin-top: 20px;
 }
 
+.header-buttos{
+  display: flex;
+}
+
 ul li{
   list-style: none;
 }
