@@ -7,6 +7,11 @@ ul li{
   list-style: none;
 }
 
+.buttons-header{
+  display: flex;
+  justify-content: space-between;
+}
+
 .right{
   margin-left: auto;
 }

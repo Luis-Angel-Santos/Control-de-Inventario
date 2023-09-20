@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -36,6 +35,13 @@ export class CategoryService {
   //buscar categoria por id
   getCategoryById(id: string){
     return this.http.get(`${this.endPoint}/${id}`);
+  }
+
+  //exportar a excel
+  exportToExcel(){
+    return this.http.get(`${this.endPoint}/export/excel`, {
+      responseType: 'blob'
+    });
   }
 
 }

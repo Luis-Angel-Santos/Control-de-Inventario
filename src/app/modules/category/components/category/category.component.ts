@@ -29,7 +29,6 @@ export class CategoryComponent implements OnInit{
 
   ngOnInit(): void {
     this.getCategories();
-    this.utilService.getRoles();
   }
 
   getCategories(): void{
@@ -168,6 +167,29 @@ export class CategoryComponent implements OnInit{
         },
       })
     }
+
+  }
+
+  exportExcel(){
+
+    this.categoryService.exportToExcel().subscribe({
+      next: (data) => {
+        let file = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        let fileUrl = URL.createObjectURL(file);
+        var anchor = document.createElement("a");
+        anchor.download = "categorias.xlsx";
+        anchor.href = fileUrl;
+        anchor.click();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Opps parece que algo salio mal, no se pudo descargar el archivo :(',
+          text: err.statusText,
+          icon: 'error',
+          showConfirmButton: false,
+        });
+      }
+    });
 
   }
 
